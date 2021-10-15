@@ -27,7 +27,7 @@ type SendTextArgs = {
 const sendText = async ({ message, to }: SendTextArgs): Promise<boolean> => {
   // Don't send texts unless it is production environment. If you want texts
   // to send while in development, simply comment out this line.
-  // if (!APP.IS_PRODUCTION) return true;
+  if (!APP.IS_PRODUCTION) return true;
 
   try {
     // Send the text

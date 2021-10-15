@@ -8,7 +8,7 @@ import TextService, { client } from './TextService';
  *        npm run test TextService
  * - Delete this comment.
  */
-describe.skip('TextService.sendText()', () => {
+describe('TextService.sendText()', () => {
   // Mock the twilio "sending" functionality.
   client.messages.create = jest.fn();
 

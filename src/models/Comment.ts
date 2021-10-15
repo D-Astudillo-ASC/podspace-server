@@ -47,13 +47,15 @@ const commentSchema: Schema<CommentDocument> = new Schema<CommentDocument>(
   { timestamps: true }
 );
 
-commentSchema.pre('save', function () {
+commentSchema.pre('save', async function () {
   if (this.isNew) {
-    /**
-     * TODO: (6.05)
-     * - Send a text to the author of the post notifying them that a podmate
-     * commented under it!
-     */
+    const post: PostDocument = await Post.findById(this.post);
+    const postAuthor: UserDocument = await User.findById(post.author);
+
+    TextService.sendText({
+      message: 'One of your podmates commented on your post!',
+      to: postAuthor.phoneNumber
+    });
   }
 });
 
