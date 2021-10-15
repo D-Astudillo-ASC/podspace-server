@@ -65,12 +65,19 @@ const postSchema: Schema<PostDocument> = new Schema<PostDocument>(
 const sendNotification = async function (
   author: PopulatedDoc<UserDocument, {} & string>
 ) {
-  /**
-   * TODO: (6.04)
-   * - Send a text to all the users except for the author of this post letting
-   * them know that their podmate shared an update!
-   */
   const allUsers: UserDocument[] = await User.find(); // type of user variable will be an array of user documents (UserDocument[]) and in order to populate the array must call an await function called User.find() (Mongoose command)
+
+  // eslint-disable-next-line array-callback-return
+  allUsers.map((user) => {
+    // called .map so that this code gets used for every item in the array of allUsers
+    if (user !== author) {
+      // if statement to ensure that the user we are sending notification to, is not the author of the post
+      TextService.sendText({
+        message: 'One of your podmates shared an update!',
+        to: user.phoneNumber
+      });
+    }
+  });
 };
 
 postSchema.pre('save', function () {
