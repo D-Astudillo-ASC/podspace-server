@@ -9,7 +9,7 @@ import TestUtils from '../utils/TestUtils';
  *        npm run test VerifyCode
  * - Delete this comment.
  */
-describe.skip('POST /verify', () => {
+describe('POST /verify', () => {
   test('If code is not a number, return a 400.', async () => {
     await TestUtils.agent.post('/verify').send({ code: '123456' }).expect(400);
   });
