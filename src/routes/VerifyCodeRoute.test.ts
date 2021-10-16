@@ -2,14 +2,7 @@ import { TEST_USER } from '../../jest.setup';
 import AuthCode, { AuthCodeDocument } from '../models/AuthCode';
 import TestUtils from '../utils/TestUtils';
 
-/**
- * TODO: (8.08)
- * - Remove the ".skip" from the following function.
- * - Go to your terminal and run the following command:
- *        npm run test VerifyCode
- * - Delete this comment.
- */
-describe.skip('POST /verify', () => {
+describe('POST /verify', () => {
   test('If code is not a number, return a 400.', async () => {
     await TestUtils.agent.post('/verify').send({ code: '123456' }).expect(400);
   });
