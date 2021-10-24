@@ -42,7 +42,7 @@ export default class VerifyCodeRoute extends BaseRoute<boolean> {
         }),
       body('code')
         .isNumeric()
-        .isLength({ max: 6, min: 6 })
+        .isLength({ min: 6, max: 6 })
         .withMessage({ message: 'Invalid OTP format.', statusCode: 400 })
     ];
   }
@@ -63,9 +63,8 @@ export default class VerifyCodeRoute extends BaseRoute<boolean> {
     const reqCode: number = req.body.code;
     const reqPhone: string = req.body.phoneNumber;
     const dbRes = await AuthCode.findOne({ phoneNumber: reqPhone });
-    const dbCode: number = dbRes.value;
-
-    if (dbCode !== reqCode) {
+    const dbCode: number = dbRes['_doc']['value'];
+    if (dbCode != reqCode) {
       throw new RouteError({
         message: 'Given OTP code is incorrect.',
         statusCode: 401
@@ -73,8 +72,8 @@ export default class VerifyCodeRoute extends BaseRoute<boolean> {
     }
     let user: UserDocument = await User.findOne({ phoneNumber: reqPhone });
 
-    // User.findOne returns null if there is no registered user with phoneNumber = reqPhone in the DB.
-    // If the user document obtained from the DB is null, we'll just create a new user with phoneNumber = reqPhone.
+    //User.findOne returns null if there is no registered user with phoneNumber = reqPhone in the DB.
+    //If the user document obtained from the DB is null, we'll just create a new user with phoneNumber = reqPhone.
     if (!user) {
       user = await User.create({ phoneNumber: reqPhone });
     }
