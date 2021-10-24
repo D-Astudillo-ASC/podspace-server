@@ -8,7 +8,7 @@ import TestUtils from '../utils/TestUtils';
  *        npm run test Logout
  * - Delete this comment.
  */
-describe.skip('POST /logout', () => {
+describe('POST /logout', () => {
   test('If the user is not authenticated, should return a 401.', async () => {
     await TestUtils.agent.post('/logout').expect(401);
   });

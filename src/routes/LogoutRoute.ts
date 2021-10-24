@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Response } from 'express';
 
 import { ApplicationRequest } from '../utils/ApplicationRequest';
@@ -15,9 +16,9 @@ export default class LogoutRoute extends BaseRoute<boolean> {
        * - Fill in the path string with the appropriate path to this endpoint.
        * - Delete this comment.
        */
-      authenticated: false,
-      method: null,
-      path: '/'
+      authenticated: true,
+      method: RouteMethod.POST,
+      path: '/logout'
     });
   }
 
@@ -31,7 +32,9 @@ export default class LogoutRoute extends BaseRoute<boolean> {
   async content(_: ApplicationRequest, res: Response): Promise<boolean> {
     // TODO: (9.02) Use the res.clearCookie('') function to remove the
     // accessToken and refreshToken from their cookies. Return true after!
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
 
-    return false;
+    return true;
   }
 }
