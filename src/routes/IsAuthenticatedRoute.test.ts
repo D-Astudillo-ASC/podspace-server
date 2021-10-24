@@ -1,5 +1,6 @@
 import { TEST_AUTH_COOKIE } from '../../jest.setup';
 import TestUtils from '../utils/TestUtils';
+
 describe('GET /authenticated', () => {
   test('If the user IS NOT authenticated, should return a 200 with false.', async () => {
     await TestUtils.agent
