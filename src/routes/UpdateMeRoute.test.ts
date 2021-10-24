@@ -2,14 +2,7 @@ import { TEST_AUTH_COOKIE, TEST_USER } from '../../jest.setup';
 import User, { UserDocument } from '../models/User';
 import TestUtils from '../utils/TestUtils';
 
-/**
- * TODO: (12.04)
- * - Remove the ".skip" from the following function.
- * - Go to your terminal and run the following command:
- *        npm run test UpdateMe
- * - Delete this comment.
- */
-describe.skip('PATCH /me', () => {
+describe('PATCH /me', () => {
   test('If the user is not authenticated, should return a 401.', async () => {
     await TestUtils.agent.patch('/me').expect(401);
   });

@@ -17,44 +17,38 @@ type UpdateMeBody = Pick<
 export default class UpdateMeRoute extends BaseRoute<UserDocument> {
   constructor() {
     super({
-      /**
-       * TODO: (12.01)
-       * - Should the user be authenticated to hit this route?
-       * - Replace null with the correct route type from the RouteMethod enum
-       * in the constants.ts file.
-       * - Fill in the path string with the appropriate path to this endpoint.
-       * - Delete this comment.
-       */
-      authenticated: false,
-      method: null,
-      path: '/'
+      authenticated: true,
+      method: RouteMethod.PATCH,
+      path: '/me'
     });
   }
 
-  /**
-   * Validate the following inputs:
-   *  - body.firstName
-   *  - body.lastName
-   *  - body.instagramUrl
-   *  - body.linkedInUrl
-   *  - body.twitterUrl
-   */
   middleware() {
     return [
-      // TODO: (12.02) We currently only validate firstName and instagramUrl.
-      // Add validations for the rest of the items in the body! lastName,
-      // linkedInUrl, and twitterUrl.
       body('firstName')
         .if((value: string) => Utils.isDefined(value))
         .isLength({ min: 1 })
         .withMessage('First name cannot be empty.'),
+
+      body('lastName')
+        .if((value: string) => Utils.isDefined(value))
+        .isLength({ min: 1 })
+        .withMessage('Last name cannot be empty.'),
 
       body('instagramUrl')
         .if((value: string) => Utils.isDefined(value) && !!value.length)
         .isURL()
         .withMessage('The Instagram URL must be a valid URL.'),
 
-      multer().single('profilePicture')
+      body('linkedInUrl')
+        .if((value: string) => Utils.isDefined(value) && !!value.length)
+        .isURL()
+        .withMessage('The LinkedIn URL must be a valid URL.'),
+
+      body('twitterUrl')
+        .if((value: string) => Utils.isDefined(value) && !!value.length)
+        .isURL()
+        .withMessage('The Twitter URL must be a valid URL.')
     ];
   }
 
