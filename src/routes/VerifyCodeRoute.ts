@@ -64,6 +64,7 @@ export default class VerifyCodeRoute extends BaseRoute<boolean> {
     const reqPhone: string = req.body.phoneNumber;
     const dbRes = await AuthCode.findOne({ phoneNumber: reqPhone });
     const dbCode: number = dbRes.value;
+    
     if (dbCode !== reqCode) {
       throw new RouteError({
         message: 'Given OTP code is incorrect.',
